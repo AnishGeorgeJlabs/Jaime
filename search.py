@@ -18,5 +18,5 @@ def search(request):
     end = start + 10
     result = data.find({}, {"_id": False})
     result = result[start:end]
-    success = dumps({"data": result, "curr_page": p, "total": data.count()})
+    success = dumps({"data": result, "page": p, "total": data.count()})
     return HttpResponse(success, content_type="application/json")
