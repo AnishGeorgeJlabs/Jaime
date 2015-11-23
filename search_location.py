@@ -16,5 +16,5 @@ def search_query(request):
         return HttpResponse(failure, content_type="application/json")
     query = {"title": re.compile(q, re.IGNORECASE)}
     result = data.distinct("title", query)
-    success = dumps({"success":1, "data": result,"total": len(result)})
+    success = dumps({"success": 1, "data": result, "total": len(result)})
     return HttpResponse(success, content_type="application/json")
