@@ -13,7 +13,7 @@ file = os.path.join(
     'db_creds.json'
 )
 with open(file, 'r') as cfile:
-    creds = json.load(cfile)['tyrion']
+    creds = json.load(cfile)['jaime']
 
 dbclient = pymongo.MongoClient("45.55.232.5:27017")
 dbclient.jaime.authenticate(creds['u'], creds['p'], mechanism='MONGODB-CR')
