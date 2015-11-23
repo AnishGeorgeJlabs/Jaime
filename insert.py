@@ -9,7 +9,7 @@ failure = dumps({"Failed"})
 def insert_query(request):
     data=db.test
     try:
-        result=data.insert_one(request)
+        result=data.insert(request)
         return HttpResponse("{'success':1}", content_type="application/json")
     except:
         return HttpResponse(failure , content_type="application/json")
