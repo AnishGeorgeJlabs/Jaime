@@ -22,6 +22,9 @@ dbclient.jaime.authenticate(creds['u'], creds['p'], mechanism='MONGODB-CR')
 db = dbclient.jaime
 
 # ------- Json response format ------------------------------ #
+def get_json(request):
+    return json.loads(request.body.decode())
+
 def jsonResponse(d):
     return HttpResponse(dumps(d), content_type='application/json')
 
