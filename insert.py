@@ -9,7 +9,4 @@ failure = dumps({"Failed"})
 def search_query(request):
     data=db.test
     dumps(request)
-    if len(request.body) > 0
-        return HttpResponse(request, content_type="application/json")
-    else
-        return HttpResponse(request, content_type="application/json")
+    return HttpResponse(request, content_type="application/json")
