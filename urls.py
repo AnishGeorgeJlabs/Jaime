@@ -1,7 +1,7 @@
 from django.conf.urls import url
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
-from . import search,search_location
+from . import search,search_location,insert
 import json
 
 @csrf_exempt
