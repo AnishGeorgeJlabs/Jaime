@@ -8,4 +8,11 @@ failure = dumps({"Failed"})
 @csrf_exempt
 def insert_query(request):
     data=db.test
-    return HttpResponse(request, content_type="application/json")
+    try:
+        result=data.insert_one(request)
+        return HttpResponse("{'success':1}", content_type="application/json")
+    except:
+        return HttpResponse(failure , content_type="application/json")
+    return HttpResponse(failure , content_type="application/json")
+
+
