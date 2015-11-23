@@ -25,7 +25,8 @@ def test(request):
 urlpatterns = [
     url(r'^$', test),
     url(r'^search',  search.search),
-    url(r'^location',  search_location.search_query)
+    url(r'^location',  search_location.search_query),
+    url(r'^insert',  insert.insert_query)
 
 ]
 
