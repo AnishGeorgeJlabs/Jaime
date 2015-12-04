@@ -19,8 +19,8 @@ def distance(obj):
     return d
 
 @csrf_exempt
-def search(request):
-    data = db.test
+def gmap(request):
+    data = db.gmapinfo
     try:
         p = int(request.GET['p'])
     except:
@@ -39,8 +39,8 @@ def search(request):
             data_for_distance = {
                 "l1": float(lat),
                 "ln1": float(lon),
-                "l2": float(re.sub("[^0-9\.]", "", str(resz['loc']['lat']  if (resz.get('loc')) else 0) )),
-                "ln2": float(re.sub("[^0-9\.]", "", str(resz['loc']['lng']  if (resz.get('loc')) else 0)))
+                "l2": float(re.sub("[^0-9\.]", "", str(resz['lat']  if (resz.get('lat')) else 0) )),
+                "ln2": float(re.sub("[^0-9\.]", "", str(resz['lng']  if (resz.get('lng')) else 0)))
             }
             resz.update({"distance": distance(data_for_distance)})
         else:
