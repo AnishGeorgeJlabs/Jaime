@@ -18,7 +18,8 @@ def insert_query(request):
         data['confirm']=0
         data['rating']=3.5
         if "uniq_code" in data:
-            gmapinfo.delete_one({"uniq_code": data['uniq_code']})
+            gmapinfo.delete_one({"uniq_id": data['uniq_code']})
+            del data['uniq_code']
         collection.insert(data)
         return basic_success(data)
     except Exception as e:
