@@ -16,7 +16,11 @@ def add_review(request):
             data['uniq_id']= 1
         reviews.insert(data)
         #collection.update({'uniq_id':data['f_uniq_id']},{ "review": 1 },{"upsert":True})
-        return basic_success()
+        coll_data = collection.find_one({"uniq_id": data['f_uniq_id']})
+        reviews = coll_data['review']+1
+        newRating = float("{0:.2f}".format((coll_data['rating']*coll_data['review'] + data['rating']) / reviews))
+        result = collection.update({"uniq_id": data['f_uniq_id']}, {"$set": {"rating": newRating,"review":reviews}}, False)
+        return basic_success(result)
     except Exception as e:
         return basic_error(e)
 
