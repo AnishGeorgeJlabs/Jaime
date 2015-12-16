@@ -25,7 +25,6 @@ def test(request):
 urlpatterns = [
     url(r'^$', test),
     url(r'^search',  search.search),
-    url(r'^scrap',  scrap.scrap),
     url(r'^datascrap',  datascrap.datascrap),
     url(r'^description',  description.description),
     url(r'^reviews',  all_reviews.all_reviews),
