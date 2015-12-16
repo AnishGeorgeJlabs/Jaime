@@ -1,5 +1,5 @@
 from bson.json_util import dumps
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import re
 
@@ -25,6 +25,10 @@ def search(request):
         p = int(request.GET['p'])
     except:
         p = 0
+    try:
+        type=request.GET['t']
+    except:
+        type="toilet"
     if 'lat' in request.GET.keys() and 'lng' in request.GET.keys():
         lat = re.sub("[^0-9\.]", "", request.GET['lat'])
         lon = re.sub("[^0-9\.]", "", request.GET['lng'])
@@ -33,7 +37,7 @@ def search(request):
 
     start = (p) * 10
     end = start + 10
-    result = list(data.find({}, {"_id": False}))
+    result = list(data.find({"type":type}, {"_id": False,"uniq_id":True,"pics":True,"title":True,"rating":True,"review":True,"img":True,"loc":True}))
     for resz in result:
         if lat:
             data_for_distance = {

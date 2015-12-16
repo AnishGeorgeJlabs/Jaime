@@ -2,20 +2,22 @@ __author__ = 'Pradeep'
 from bson.json_util import dumps
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-import re
 from . import db
 
 failure = dumps({"success":0})
 
 @csrf_exempt
-def search_query(request):
-    data = db.test
+def all_reviews(request):
+    reviews=db.reviews
     try:
-        q = request.GET['q']
-        type=request.GET['t']
+        q = int(request.GET['id'])
     except:
         return HttpResponse(failure, content_type="application/json")
-    query = {"title": re.compile(q, re.IGNORECASE),"type":type}
-    result = data.find(query, {"_id":False,"title": True,"loc":True,})
-    success = dumps({"success": 1, "data": result, "total": result.count()})
+    try:
+        p = int(request.GET['p'])
+    except:
+        p=0
+
+    review = reviews.find({"f_uniq_id":q}, {"_id":False,"f_uniq_id": False})[p*10:p*10+10]
+    success = dumps({"success": 1, "data": review})
     return HttpResponse(success, content_type="application/json")

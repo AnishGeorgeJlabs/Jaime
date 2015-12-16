@@ -2,7 +2,7 @@ author="Pradeep"
 
 import pymongo
 from django.http import HttpResponse
-from bson.json_util import dumps, loads
+from bson.json_util import dumps
 
 # ------- Database Authentication and access ---------------- #
 import json
@@ -35,7 +35,7 @@ def basic_error(reason=None):
     return base_response(success=False, ekey="error", reason=str(reason))
 
 def basic_success(data=None):
-    return base_response(success=True, data=data)
+    return base_response(success=1, data=data)
 
 def base_response(success=False, data=None, ekey="reason", reason=None):
     res = {"success": success}
