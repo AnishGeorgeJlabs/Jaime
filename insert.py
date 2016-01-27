@@ -7,7 +7,7 @@ failure = dumps({"Failed"})
 def insert_query(request):
     try:
         data = get_json(request)
-        collection =db.test
+        collection =db.fe_app
         gmapinfo = db.gmapinfo
         try:
             result=collection.distinct("uniq_id")

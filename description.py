@@ -3,19 +3,20 @@ from bson.json_util import dumps
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import re
+import json
 from . import db
 
 failure = dumps({"success":0})
 
 @csrf_exempt
-def search_query(request):
+def description(request):
     data = db.test
+    reviews=db.reviews
     try:
-        q = request.GET['q']
-        type=request.GET['t']
+        q = int(request.GET['id'])
     except:
         return HttpResponse(failure, content_type="application/json")
-    query = {"title": re.compile(q, re.IGNORECASE),"type":type}
-    result = data.find(query, {"_id":False,"title": True,"loc":True,})
-    success = dumps({"success": 1, "data": result, "total": result.count()})
+    review = reviews.find({"f_uniq_id":q}, {"_id":False,"f_uniq_id": False})[0:2]
+    result = data.find_one({"uniq_id": q}, {"_id":False,"desc": True,"icons":True})
+    success = dumps({"success": 1, "data": result,"review":review})
     return HttpResponse(success, content_type="application/json")
