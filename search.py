@@ -1,5 +1,5 @@
 from bson.json_util import dumps
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 import re
 

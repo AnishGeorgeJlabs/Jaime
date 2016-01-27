@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from bson.json_util import dumps
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -8,6 +9,13 @@ import json
 from . import db, basic_error
 
 from math import pi, sin, cos, atan2, sqrt
+=======
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
+import json
+from . import db, basic_error
+
+>>>>>>> origin/master
 
 @csrf_exempt
 def datascrap(request):

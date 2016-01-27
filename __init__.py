@@ -2,7 +2,7 @@ author="Pradeep"
 
 import pymongo
 from django.http import HttpResponse
-from bson.json_util import dumps, loads
+from bson.json_util import dumps
 
 # ------- Database Authentication and access ---------------- #
 import json
