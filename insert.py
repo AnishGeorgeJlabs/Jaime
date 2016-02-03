@@ -1,6 +1,7 @@
 from bson.json_util import dumps
 from django.views.decorators.csrf import csrf_exempt
 from . import db, get_json, basic_success, basic_error
+import datetime
 
 failure = dumps({"Failed"})
 @csrf_exempt
@@ -9,6 +10,7 @@ def insert_query(request):
         data = get_json(request)
         collection =db.fe_app
         gmapinfo = db.gmapinfo
+        fe_track=db.fe_track
         try:
             result=collection.distinct("uniq_id")
             data['uniq_id']=max(result)+1
@@ -21,6 +23,18 @@ def insert_query(request):
             gmapinfo.delete_one({"uniq_id": data['uniq_code']})
             del data['uniq_code']
         collection.insert(data)
+
+        new_dict = dict()
+        try:
+            res=fe_track.distinct("uniq_id")
+            new_dict['uniq_id']=max(res)+1
+        except:
+            new_dict['uniq_id'] = 1
+        new_dict['loc']=data['loc']
+        now = datetime.datetime.now()
+        new_dict['date_time'] = now.strftime("%Y-%m-%d %H:%M")
+        fe_track.insert(new_dict)
+
         return basic_success(data)
     except Exception as e:
         return basic_error(e)
