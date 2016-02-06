@@ -1,7 +1,7 @@
 from bson.json_util import dumps
 from django.views.decorators.csrf import csrf_exempt
 from . import db, get_json, basic_success, basic_error
-import datetime
+from datetime import datetime, timedelta
 
 failure = dumps({"Failed"})
 @csrf_exempt
@@ -31,7 +31,7 @@ def insert_query(request):
         except:
             new_dict['uniq_id'] = 1
         new_dict['loc']=data['loc']
-        now = datetime.datetime.now()
+        now = datetime.datetime.now() + timedelta(hours=5,minutes=30)
         new_dict['date_time'] = now.strftime("%Y-%m-%d %H:%M")
         fe_track.insert(new_dict)
 
