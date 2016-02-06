@@ -31,7 +31,7 @@ def insert_query(request):
         except:
             new_dict['uniq_id'] = 1
         new_dict['loc']=data['loc']
-        now = datetime.datetime.now() + timedelta(hours=5,minutes=30)
+        now = datetime.now() + timedelta(hours=5,minutes=30)
         new_dict['date_time'] = now.strftime("%Y-%m-%d %H:%M")
         fe_track.insert(new_dict)
 
