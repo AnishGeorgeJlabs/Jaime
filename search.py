@@ -52,6 +52,6 @@ def search(request):
     result=sorted(result, key=lambda o: 10000 if False else o['distance'])
     result = [x for x in result if x['distance'] < 500]
     i=len(result)
-    result = result[start:end]
+    #result = result[start:end]
     success = dumps({"data": result, "page": p, "total": i})
     return HttpResponse(success, content_type="application/json")
