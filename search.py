@@ -20,7 +20,7 @@ def distance(obj):
 
 @csrf_exempt
 def search(request):
-    data = db.test
+    data = db.fe_app
     try:
         p = int(request.GET['p'])
     except:
