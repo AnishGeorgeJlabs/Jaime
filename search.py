@@ -46,7 +46,7 @@ def search(request):
                 "l2": float(re.sub("[^0-9\.]", "", str(resz['loc']['lat']  if (resz.get('loc')) else 0) )),
                 "ln2": float(re.sub("[^0-9\.]", "", str(resz['loc']['lng']  if (resz.get('loc')) else 0)))
             }
-            resz.update({"distance": distance(data_for_distance)})
+            resz.update({"distance": round(distance(data_for_distance) , 1)})
         else:
             resz.update({"distance": False})
     result=sorted(result, key=lambda o: 10000 if False else o['distance'])
