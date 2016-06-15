@@ -55,3 +55,11 @@ def search(request):
     result = result[start:end]
     success = dumps({"data": result, "page": p, "total": i})
     return HttpResponse(success, content_type="application/json")
+	
+@csrf_exempt
+def searchall(request):
+    data = db.fe_app
+    result = list(data.find({}, {"_id": False,"uniq_id":True,"pics":True,"title":True,"rating":True,"review":True,"img":True,"loc":True}))
+    i=len(result)
+    success = dumps({"data": result,"total": i})
+    return HttpResponse(success, content_type="application/json")
