@@ -2,6 +2,7 @@ from bson.json_util import dumps
 from django.views.decorators.csrf import csrf_exempt
 from . import db, get_json, basic_success, basic_error
 from datetime import datetime, timedelta
+import re
 
 failure = dumps({"Failed"})
 @csrf_exempt
@@ -39,3 +40,18 @@ def insert_query(request):
     except Exception as e:
         return basic_error(e)
 
+def fe_track(request):
+	try:
+		date = request.GET['date']
+		if date:	
+			regex = re.compile(date)
+			data =db.fe_track.find({"date_time":{'$regex':regex}} , {"_id":False , "uniq_id":True})
+			ids=list()
+			for d in data:
+				ids.append(d['uniq_id'])
+			data=db.fe_app.find({"uniq_id":{'$in':ids}})
+			return basic_success(data)
+		else:
+			return basic_success(db.fe_app.find({} , {"_id":False}))
+	except:
+		return basic_error()

@@ -32,7 +32,8 @@ urlpatterns = [
     url(r'^add_review',  add_review.add_review),
     url(r'^gmap',  gmap.gmap),
     url(r'^location',  search_location.search_query),
-    url(r'^insert',  insert.insert_query)
+    url(r'^insert',  insert.insert_query),
+	url(r'^track',  insert.fe_track)
 
 ]
 
