@@ -9,7 +9,7 @@ failure = dumps({"success":0})
 
 @csrf_exempt
 def search_query(request):
-    data = db.test
+    data = db.fe_app
     try:
         q = request.GET['q']
         type=request.GET['t']
