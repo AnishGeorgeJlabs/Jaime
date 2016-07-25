@@ -55,3 +55,46 @@ def fe_track(request):
 			return basic_success(db.fe_app.find({} , {"_id":False}))
 	except:
 		return basic_error()
+		
+		
+@csrf_exempt
+def fe_add(request):
+	try:
+		data={}
+		data['fe_id']=request.GET['id']
+		data['lat'] = request.GET['lat']
+		data['lon'] = request.GET['lon']
+		data['time'] = request.GET['time']
+		now = datetime.now()
+		data['date']=now.strftime("%Y-%m-%d %H:%M")
+		max = db.fe_daily.find_one({'$query':{} , '$orderby':{'_id':-1}} , {'_id':0 , 'sn':1})
+		try:
+			data['sn']= int(max.get('sn')) +1
+		except:
+			data['sn']=1 
+		result =db.fe_daily.insert_one(data)
+		if result.inserted_id:
+			return basic_success()
+		else:
+			return basic_error()
+	except Exception as e: 
+		return basic_error(str(e))
+
+@csrf_exempt
+def fe_show(request):
+	try:
+		date = request.GET.get('date');
+		id = request.GET['id'];
+		
+		if date:
+			regex = re.compile(date)
+			data =db.fe_daily.find({"fe_id":id , "date":{'$regex':regex}} , {"_id":False }).sort('sn',-1)
+		else:
+			data =db.fe_daily.find({"fe_id":id} , {"_id":False }).sort('sn',-1)
+		
+		if data:	
+			return basic_success(data)
+		else:
+			return basic_error();
+	except Exception as e:
+		return basic_error(str(e))
