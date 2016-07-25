@@ -65,7 +65,7 @@ def fe_add(request):
 		data['lat'] = request.GET['lat']
 		data['lon'] = request.GET['lon']
 		data['time'] = request.GET['time']
-		now = datetime.now()
+		now = datetime.now() + timedelta(hours=5,minutes=30)
 		data['date']=now.strftime("%Y-%m-%d %H:%M")
 		max = db.fe_daily.find_one({'$query':{} , '$orderby':{'_id':-1}} , {'_id':0 , 'sn':1})
 		try:
