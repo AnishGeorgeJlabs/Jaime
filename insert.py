@@ -26,11 +26,7 @@ def insert_query(request):
         collection.insert(data)
 
         new_dict = dict()
-        try:
-            res=fe_track.distinct("uniq_id")
-            new_dict['uniq_id']=max(res)+1
-        except:
-            new_dict['uniq_id'] = 1
+		new_dict['uniq_id'] = data['uniq_id']
         new_dict['loc']=data['loc']
         now = datetime.now() + timedelta(hours=5,minutes=30)
         new_dict['date_time'] = now.strftime("%Y-%m-%d %H:%M")
