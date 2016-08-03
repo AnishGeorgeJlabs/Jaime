@@ -1,6 +1,6 @@
 from bson.json_util import dumps
 from django.views.decorators.csrf import csrf_exempt
-from . import db, get_json, basic_success, basic_error
+from . import db, get_json, basic_success, basic_error ,haversine
 from datetime import datetime, timedelta
 import re
 
@@ -62,10 +62,13 @@ def fe_add(request):
 		data['time'] = request.GET['time']
 		now = datetime.now() + timedelta(hours=5,minutes=30)
 		data['date']=now.strftime("%Y-%m-%d %H:%M")
-		max = db.fe_daily.find_one({'$query':{} , '$orderby':{'_id':-1}} , {'_id':0 , 'sn':1})
+		max = db.fe_daily.find_one({'$query':{} , '$orderby':{'sn':-1}} , {'_id':0})
+		distance = haversine(float(max['lon']),float(max['lat']) ,float(data['lon']) ,float(data['lat']) )
 		try:
 			data['sn']= int(max.get('sn')) +1
+			data['distance']=distance
 		except:
+			data['distance']=0.0
 			data['sn']=1 
 		result =db.fe_daily.insert_one(data)
 		if result.inserted_id:

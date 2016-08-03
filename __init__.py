@@ -3,6 +3,7 @@ author="Pradeep"
 import pymongo
 from django.http import HttpResponse
 from bson.json_util import dumps
+from math import *
 
 # ------- Database Authentication and access ---------------- #
 import json
@@ -33,6 +34,15 @@ def basic_failure(reason=None):
 
 def basic_error(reason=None):
     return base_response(success=False, ekey="error", reason=str(reason))
+
+def haversine(lon1, lat1, lon2, lat2):
+	lon1, lat1, lon2, lat2 = map(radians, [lon1, lat1, lon2, lat2])
+	dlon = lon2 - lon1
+	dlat = lat2 - lat1
+	a = sin(dlat/2)**2 + cos(lat1) * cos(lat2) * sin(dlon/2)**2
+	c = 2 * asin(sqrt(a))
+	r = 6371 
+	return c * r
 
 def basic_success(data=None):
     return base_response(success=1, data=data)
